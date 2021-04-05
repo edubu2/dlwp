@@ -1,0 +1,20 @@
+first successful use of neural network
+    - 1990s - USPS using neural net to identify zip codes on envelopes
+
+kernel methods
+    - classification methods that involve decision boundaries
+        - svm (most popular)
+            - support vector machines
+            - maps data to higher dimensions to more easily find separation
+            - doesn't scale well with large datasets
+            - requires feature engineering
+        - called 'kernel methods' because they all use the 'trick' of mapping data to higher dimensions
+    - effective in cases where number of dimensions is greater than the number of samples
+
+key benefits to deep learning
+    - simplicity (no f.e.)
+    - scalability (trained via small batches of data, also parallelizable)
+    - versatility and REUSABILITY
+        - existing models can be trained on additional data without restarting from scratch
+            - makes them viable for continuous machine learning (important for large production models)
+
