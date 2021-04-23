@@ -34,3 +34,80 @@ defining models: sequential vs functional API
     - functional API
         - more arbitrary, no given input size, 
 
+fast-forwarding to ch 3
+
+neural net hyperparameters
+    - these are simply the number of hidden layers & number of units they each contain
+
+num epochs:
+    - start with a high number, then plot epochs (x) vs. loss function
+        - this shows at which num epochs the model started overfitting
+        - use `history = model.fit(...)` - `history` then contains all we need to do this (see ch3 example notebooks)
+
+num layers
+    - start with a 'stack' of 2 relu activated layers, in most cases
+    - continue adding layers/units until performance (measured by loss func) begins to deteriorate
+
+layer size (# units)
+    - depends on type of problem
+    - use base 2 numbers
+    - for predicting multiclass labels: there should be more units than num. potential classes
+        - i.e. for labeling articles with 46 possible labels, used two 64-unit layers 
+
+output layers
+    - binary classification: 1 unit sigmoid activation
+    - multi-class classification (single-label): x-unit 'softmax' activation
+    - regression: 1 unit (no activation/linear)
+
+batch size
+    - on a GPU, typically between 8 and 128 (some base-2 integer to maximize memory allocation on GPU)
+    - this is the number of samples used for each individual stochastic gradient descent update
+    - with batch_size = 1, SGD occurs for every single sample
+
+ch 4
+
+information leak
+    - this happens when you tune the hyperparameters on the validation set
+    - it is an indirect effect, where information about the *validation set* is *leaked* into the model - hurts the model's ability to generalize to new data
+
+types of validation
+    - simple holdout set (train/test)
+    - K-fold cross-validation
+    - iterated K-fold CV with shuffling
+        - good for kaggle competitions, or when you need extremely precise measurements
+        - does k-fold validation multiple times, shuffling the data each time before splitting it K ways
+            - can get expensive very quickly
+
+vectorization
+    - converting input data into tensors/vectors that can be fed into the model
+
+value normalization/scaling
+    - subtract the mean & divide by the standard deviation
+
+regularization techniques
+    - used to penalize weight complexity during the training of your model
+    - methods:
+        - L1 (Lasso): The cost added to the loss function is proportional to the ABS VALUE of the weight coefficient
+        - L2 (Ridge): The cost added to the loss function is proportional to the SQUARE VALUE of the weight coefficient
+        - L1_L2: implementing both
+        - dropout layers
+            - added after each layer (except output layer) to randomly assign values of layer output matrices to zeros (helps reduce overfitting)
+        
+methods to reduce overfitting (summary)
+    - get more training data
+    - reduce the capacity of the network
+    - add weight regularization
+    - add dropout
+
+three key model choices (summary):
+    - last-layer activation (i.e. sigmoid for binary, linear/none for regression)
+    - loss function (i.e. binary_crossentropy for binary classification)
+    - optimization configuration & associated learning rate (i.e. rmsprop)
+
+solving neural network problems (steps) (summary)
+    - after you've defined the problem & gathered all necessary engineered features, do:
+    - develop a first model that does better than a basic baseline
+        - this is a model with 'statistical power'
+    - then develop a model that overfits
+    - then implement regularization & tune the hyperparameters (num layers/units), based on performance on the validation data
+        - this is where most of the time is spent - make sure to keep the big picture in mind
