@@ -60,4 +60,27 @@ small image datasets
     - hundreds : thousands
     - still possible to train a reasonably accurate convnet on these datasets, so long as the task is relatively simple
 
+pretrained networks
+
+    
+pre-trained convnets
+    - these are saved networks that were previously trained on a large dataset, but are used on much smaller ones.
+        - typically used for large-scale image-classification tasks
+
+    - 2 common methods of using these:
+        1. feature extraction
+        2. fine tuning
+
+pre-trained convnets: feature extraction
+
+    - the first part (in our examples, the Conv2D/Max Pooling layers) is called the `convolutional base` of the network
+        - feature extraction consists of taking the convolutional base of a previously trained network, running new data through it, and training a classifier on top of the output.
+
+    - the second part, the densely connected classifier layers, are not reused, generally
+        - our example - we're using the ImageNet pretrained model, and cats/dogs were already included in the labels of that model
+            - so, we could (and probably should) use the densely connected layers - but we won't here to show that using just the conv. base will work.
+
+    - 
+
+
 
