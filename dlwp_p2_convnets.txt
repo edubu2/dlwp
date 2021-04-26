@@ -1,0 +1,63 @@
+convnets
+    - = convolutional neural networks
+    - very good for image classification
+        - got 98.9% accuracy w/ MNIST data (handwritten digits)
+    - in practice, they're just types of layers added to the model, which are then fed into densely connected layers that form the classifier
+    
+how convnets work
+    - dense layers learn 'global' patterns in their input feature space (use all pixels for MNIST)
+    - convolutional layers learn 'local' patterns (for example, 3x3 pixels at a time)
+
+    - if convnets recognize a certain pattern at the bottom right of a set of images, it can also recognize it on the top left of a different image (or anywhere else)
+        - a densely connected network would have to learn the pattern anew if it appeared at a new location
+
+    - they can learn spatital hierarchies of patterns
+        - the first convnet layer learns very general representations
+            - for a cat, could notice the symmetric ears & eyes, and maybe the nose (for example)
+        - the second layer is able to deconstruct it futher, learning the components of what makes up an eye/ear/nose
+        - and so on
+        - so, the more layers used, the better the model can classify complex images
+    
+convnets operate on 3D tensors
+    - (height, width, depth)
+        - depth, aka channels, are for color
+            - RGB images have depth=3, since takes 3 values to determine color
+            - grayscale images (like MNIST) have depth=1 (levels of gray) 
+
+output feature maps (filters)
+    - the output of convolutional layers is called an 'output feature map'
+    - output feature maps are still 3D with height & width, but the depth aspect is arbitrary
+    - depth (for output) no longer stands for specific colors - rather, they stand for FILTERS
+    
+    - filters
+        - filters encode certain aspects of the input data
+            - for example (high level), a single filter can encode the concept "presence of a face in the input"
+
+downsampling - what is it
+    - used to reduce the number of feature-map coefficients to process
+    - also induces spatial-filter hierarchies by making successive convolution layers look at increasingly large windows (in terms of the fraction of the original input they cover)
+
+downsampling - methods
+    - strides
+        - default = 1...so the 3x3 (or whatever size convolutions) sliding window centers around every point
+        - if stride = 2, window shifts 2 tiles over each time (thus making fewer calculations but still keeping the same picture)
+    
+    - max pooling (Chollet recommends)
+        - only keeps the maximum value (darkest gray, for a black/white example) for each window it captures
+        - effectively halves the input data
+    
+    - avg pooling (not as good as max, usually)
+        - records the avg value of all tiles in each convolution (instead of the max value)
+    
+note: continuing ch 5 in a jupyter notebook convnet_dogs_cats.ipynb
+
+steps for image classification on small datasets:
+    1. train a small model (no regularization)
+    2. doing feature extraction with a pre-trained network
+    3. fine-tuning a pre-trained model
+
+small image datasets
+    - hundreds : thousands
+    - still possible to train a reasonably accurate convnet on these datasets, so long as the task is relatively simple
+
+
